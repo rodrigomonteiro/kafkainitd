@@ -24,3 +24,5 @@ restartAndCheck "kafka-server" "5s" "Kafka Broker running" "/var/log/kafka/kafka
 restartAndCheck "schema-registry" "10s" "Schema Registry running" "/var/log/kafka/schema-registry.out"
 
 restartAndCheck "kafka-rest" "1s" "Kafka REST running" "/var/log/kafka/kafka-rest.out"
+
+restartAndCheck "kafka-connect" "5s" "Kafka Connect running" "/var/log/kafka/connect.out"

@@ -22,12 +22,12 @@
 #
 ### BEGIN INIT INFO
 # Provides:          kafka-rest
-# Required-Start:    $local_fs $remote_fs $network $syslog kafka zookeeper
-# Required-Stop:     $local_fs $remote_fs $network $syslog kafka zookeeper
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
 # Short-Description: Startup script for Kafka REST server
 # Description:       Kafka REST is a REST interface for Kafka
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Required-Start:    $local_fs $remote_fs $network $syslog kafka zookeeper
+# Required-Stop:     $local_fs $remote_fs $network $syslog kafka zookeeper
 ### END INIT INFO
 
 DAEMON_PATH=/usr/bin
@@ -44,7 +44,7 @@ LOG_FILE=/var/log/kafka/kafka-rest.out
 case "$1" in
 start)
   echo "Starting $DAEMON_NAME";
-  PID=`$DAEMON_PATH/$START_SCRIPT $PROPERTIES_FILE > $LOG_FILE 2>&1 & echo $!`
+  PID=`nohup $DAEMON_PATH/$START_SCRIPT $PROPERTIES_FILE > $LOG_FILE 2>&1 & echo $!`
 
   if [ -z $PID ]; then
       printf "%s\n" "$NAME failed to start"

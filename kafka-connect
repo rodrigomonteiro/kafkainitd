@@ -15,32 +15,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Starts a Kafka Broker
+# Starts a Kafka-Connect server
 #
 # chkconfig: 35 85 15
-# description: Kafka Broker
+# description: Kafka-Connect server
 #
 ### BEGIN INIT INFO
-# Provides:          kafka
-# Short-Description: Startup script for Kafka broker
-# Description:       Kafka is a high-throughput distributed messaging system.
+# Provides:          kafka-connect
+# Short-Description: Startup script for Kafka-Connect server
+# Description:       Kafka-Connect
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Required-Start:    $local_fs $remote_fs $network $syslog zookeeper
-# Required-Stop:     $local_fs $remote_fs $network $syslog zookeeper
+# Required-Start:    $local_fs $remote_fs $network $syslog kafka zookeeper schema-registry
+# Required-Stop:     $local_fs $remote_fs $network $syslog kafka zookeeper schema-registry
 ### END INIT INFO
 
 DAEMON_PATH=/usr/bin
-DAEMON_NAME=kafka
+DAEMON_NAME=kafka-connect
 
-PIDFILE=/var/run/kafka-broker.pid
+PIDFILE=/var/run/kafka-connect.pid
 PATH=$PATH:$DAEMON_PATH
-PROPERTIES_FILE=/etc/kafka/server.properties
-START_SCRIPT=kafka-server-start
-STOP_SCRIPT=kafka-server-stop
-NAME="Kafka Broker"
+PROPERTIES_FILE=/etc/kafka/connect-distributed.properties
+START_SCRIPT=connect-distributed
+NAME="Kafka Connect"
 
-LOG_FILE=/var/log/kafka/kafka-server.out
+LOG_FILE=/var/log/kafka/connect.out
 
 case "$1" in
 start)
@@ -71,7 +70,6 @@ stop)
             PID=`cat $PIDFILE`
             cd $DAEMON_PATH
         if [ -f $PIDFILE ]; then
-            $DAEMON_PATH/$STOP_SCRIPT 2>/dev/null
             kill -HUP $PID
             printf "%s\n" "$NAME stopped"
             rm -f $PIDFILE

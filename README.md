@@ -13,6 +13,7 @@
   sudo chmod 0755 kafka-server
   sudo chmod 0755 schema-registry
   sudo chmod 0755 kafka-rest
+  sudo chmod 0755 kafka-connect
   ```
 
 2. Copy the scripts to init.d:
@@ -21,14 +22,16 @@
   sudo cp kafka-server /etc/init.d
   sudo cp schema-registry /etc/init.d
   sudo cp kafka-rest /etc/init.d
+  sudo cp kafka-connect /etc/init.d
   ```
 
 2. Set them to run at boot:
   ```
-  sudo update-rc.d zookeeper defaults
-  sudo update-rc.d kafka-server defaults
-  sudo update-rc.d schema-registry defaults
-  sudo update-rc.d kafka-rest defaults 91
+  sudo chkconfig --add zookeeper
+  sudo chkconfig --add kafka-server
+  sudo chkconfig --add schema-registry
+  sudo chkconfig --add kafka-rest
+  sudo chkconfig --add kafka-connect
   ```
 
-**Note:** If you're just using Kafka, don't run the commands for `schema-registry` or `kafka-rest` and possibly `zookeeper`.
+**Note:** If you're just using Kafka, don't run the commands for `schema-registry`, `kafka-rest` or `kafka-connect` and possibly `zookeeper`.
